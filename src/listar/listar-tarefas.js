@@ -10,6 +10,7 @@ import Ordenacao from './ordenacao';
 
 function ListTarefas() {
     const ITEMS_POR_PAGINA = 4;
+    const API_URL_LISTAR_TAREFAS = 'http://localhost:3001/gerenciador-tarefas';
 
     const [tarefas, setTarefas] = useState([]);
     const [carregarTarefa, setCarregarTarefas] = useState(true);
@@ -20,30 +21,8 @@ function ListTarefas() {
     const [filtroTarefa, setFiltroTarefa] = useState('');
 
     useEffect(() => {
-        function obterTarefa() {
-            const tarefasDb = localStorage.getItem('tarefas'); // Alterado para `getItem` para melhor legibilidade.
-            let listTarefas = tarefasDb ? JSON.parse(tarefasDb) : [];
-            
-            // Filtrar tarefas
-            listTarefas = listTarefas.filter(
-                (t) => t.nome.toLowerCase().startsWith(filtroTarefa.toLowerCase())
-            );
-
-            // Ordenar tarefas
-            if (ordenarAsc) {
-                listTarefas.sort((t1, t2) => t1.nome.localeCompare(t2.nome));
-            } else if (ordenarDesc) {
-                listTarefas.sort((t1, t2) => t2.nome.localeCompare(t1.nome));
-            }
-
-            // Atualizar estados
-            setTotalItems(listTarefas.length);
-            setTarefas(
-                listTarefas.slice(
-                    (paginaAtual - 1) * ITEMS_POR_PAGINA,
-                    paginaAtual * ITEMS_POR_PAGINA
-                )
-            );
+        async function obterTarefa() {
+             
         }
 
         if (carregarTarefa) {

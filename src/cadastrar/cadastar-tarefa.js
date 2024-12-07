@@ -5,9 +5,11 @@ import Tarefa from '../models/tarefa.model';
 
 function CadastrarTarefa() {
 
+  
     const [tarefa, setTarefa] = useState('');
     const [formValidate, setFormValidate] = useState(false);
     const [exibirModal, setExibirModal] = useState(false);
+    const [exibirModalError, setExibirModalError] = useState(false);
     const navigate = useNavigate(); // Inicializa o hook para navegação
 
     function cadastrar(event) {
@@ -25,6 +27,10 @@ function CadastrarTarefa() {
     function handleFecharModal() {
         setExibirModal(false); // Fecha o modal antes de redirecionar
         navigate('/'); // Redireciona para a página inicial
+    }
+
+    function handleFecharModalError() {
+        setExibirModalError(false);x
     }
 
     return (

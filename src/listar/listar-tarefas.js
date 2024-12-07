@@ -11,7 +11,7 @@ import axios from 'axios';
 
 function ListTarefas() {
     const ITEMS_POR_PAGINA = 4;
-    const API_URL_LISTAR_TAREFAS = 'http://localhost:3001/gerenciador-tarefas';
+    const API_URL_LISTAR_TAREFAS = 'http://localhost:4000/gerenciador-tarefas';
 
     const [tarefas, setTarefas] = useState([]);
     const [carregarTarefa, setCarregarTarefas] = useState(true);

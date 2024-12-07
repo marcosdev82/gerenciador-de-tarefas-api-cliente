@@ -14,13 +14,7 @@ function CadastrarTarefa() {
         event.preventDefault();
         setFormValidate(true);
         if (event.currentTarget.checkValidity() === true) {
-            // Obtém as tarefas
-            const tarefasDb = localStorage['tarefas'];
-            const tarefas = tarefasDb ? JSON.parse(tarefasDb) : [];
-            // Persiste a tarefa
-            tarefas.push(new Tarefa(new Date().getTime(), tarefa, false));
-            localStorage['tarefas'] = JSON.stringify(tarefas);
-            setExibirModal(true);
+            
         }
     }
 
@@ -86,6 +80,22 @@ function CadastrarTarefa() {
                                 onClick={handleFecharModal}
                             >
                                 Continuar
+                            </Button>
+                        </Modal.Footer>
+                    </Modal>
+                    <Modal show={exibirModalError} onHide={handleFecharModalError} >
+                        <Modal.Header closeButton>
+                            <Modal.title>Erro</Modal.title>
+                        </Modal.Header>
+                        <Modal.Body>
+                            Erro ao adicionar tarefa, tente novamente em instantes.
+                        </Modal.Body>
+                        <Modal.Footer>
+                            <Button
+                                variant='warinig'
+                                onClick={handleFecharModalError}
+                            >
+                                Fechar
                             </Button>
                         </Modal.Footer>
                     </Modal>

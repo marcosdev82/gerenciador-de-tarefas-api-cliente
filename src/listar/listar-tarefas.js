@@ -10,7 +10,7 @@ import Ordenacao from './ordenacao';
 import axios from 'axios';
 
 function ListTarefas() {
-    const ITEMS_POR_PAGINA = 4;
+    const ITEMS_POR_PAGINA = 3;
     const API_URL_LISTAR_TAREFAS = 'http://localhost:4000/gerenciador-tarefas';
 
     const [tarefas, setTarefas] = useState([]);
@@ -35,6 +35,7 @@ function ListTarefas() {
             try {
                 const params = `?pag=${paginaAtual}&ordem=${ordem}&filtro-tarefa=${filtroTarefa}`; 
                 let { data } = await axios.get(API_URL_LISTAR_TAREFAS + params);
+                console.log(data)
                 setTotalItems(data.totalItems);
                 setTarefas(data.tarefas);
             } catch (err) {

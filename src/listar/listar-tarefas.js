@@ -7,6 +7,7 @@ import { faPlus } from '@fortawesome/free-solid-svg-icons';
 import ItensListaTarefas from './itens-lista-tarefas';
 import Paginacao from './paginacao';
 import Ordenacao from './ordenacao';
+import axios from 'axios';
 
 function ListTarefas() {
     const ITEMS_POR_PAGINA = 4;
@@ -22,7 +23,23 @@ function ListTarefas() {
 
     useEffect(() => {
         async function obterTarefa() {
-             
+
+            // ordem 
+            let ordem = '';
+            if (ordenarAsc) {
+                ordem = 'ASC'
+            } else if (ordenarDesc) {
+                ordem = 'DESC'
+            }
+
+            try {
+                const params = `?pag=${paginaAtual}&ordem=${ordem}&filtro-tarefa=${filtroTarefa}`; 
+                let { data } = await axios.get(API_URL_LISTAR_TAREFAS + params);
+                setTotalItems(data.totalItems);
+                setTarefas(data.tarefas);
+            } catch (err) {
+                setTarefas([]);
+            }
         }
 
         if (carregarTarefa) {

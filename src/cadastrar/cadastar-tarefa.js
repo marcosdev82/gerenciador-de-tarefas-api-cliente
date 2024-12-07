@@ -2,21 +2,30 @@ import React, { useState } from 'react';
 import { Button, Form, Modal, Container, Card } from 'react-bootstrap';
 import { useNavigate, Link } from 'react-router-dom';
 import Tarefa from '../models/tarefa.model';
+import axios from 'axios';
 
 function CadastrarTarefa() {
 
-  
+    const API_URL_CADASTRAR_TAREFA = 'http://localhost:4000/gerenciador-tarefas';
+
     const [tarefa, setTarefa] = useState('');
     const [formValidate, setFormValidate] = useState(false);
     const [exibirModal, setExibirModal] = useState(false);
     const [exibirModalError, setExibirModalError] = useState(false);
     const navigate = useNavigate(); // Inicializa o hook para navegação
 
-    function cadastrar(event) {
+    async function cadastrar(event) {
         event.preventDefault();
         setFormValidate(true);
         if (event.currentTarget.checkValidity() === true) {
-            
+            try {
+                const novaTarefa = new Tarefa(null, tarefa, false);
+                await axios.post(API_URL_CADASTRAR_TAREFA, novaTarefa);
+                setExibirModal(true);
+            } catch (err) {
+                console.log(err)
+                setExibirModalError(true);
+            }
         }
     }
 
@@ -30,7 +39,7 @@ function CadastrarTarefa() {
     }
 
     function handleFecharModalError() {
-        setExibirModalError(false);x
+        setExibirModalError(false);
     }
 
     return (

@@ -1,25 +1,34 @@
 import React, { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { Button, Form, Container, Modal } from "react-bootstrap";
+import axios from "axios";
 
 function AtualizarTarefa() {
     const { id } = useParams(); // Obtém o parâmetro `id` da URL
     const navigate = useNavigate();
+    const API_URL_TAREFAS = 'http://localhost:4000/gerenciador-tarefas/';
 
     const [exibirModal, setExibirModal] = useState(false);
     const [formValidado, setFormValidado] = useState(false);
     const [tarefa, setTarefa] = useState('');
     const [carregarTarefa, setCarregarTarefa] = useState(true);
+    const [exibirModalError, setExibirModalErro] = useState(false);
+
+    
 
     useEffect(() => {
-        if (carregarTarefa) {
-            const tarefasDd = localStorage['tarefas'];
-            const tarefas = tarefasDd ? JSON.parse(tarefasDd) : [];
-            const tarefaEncontrada = tarefas.find(t => t.id === parseInt(id, 10));
+        async function obterTrefa() {
+            try {
+                let { data } = await axios.get(API_URL_TAREFAS + id);
+                console.log(id, data)
+                setTarefa(data.nome);
+            } catch (err) {
+                navigate("/");
+            }
+        }
 
-            if (tarefaEncontrada && tarefaEncontrada.nome) {
-                setTarefa(tarefaEncontrada.nome);
-            }  
+        if (carregarTarefa) {
+            obterTrefa();
             setCarregarTarefa(false);
         }
     }, [carregarTarefa, id]);
@@ -51,6 +60,10 @@ function AtualizarTarefa() {
 
     function handleFecharModal() {
         navigate("/");
+    }
+
+    function handleFecharModalError() {
+        setExibirModalErro(false);
     }
 
     return (
@@ -92,6 +105,22 @@ function AtualizarTarefa() {
                     <Modal.Footer>
                         <Button variant="success" onClick={handleFecharModal}>
                             Continuar
+                        </Button>
+                    </Modal.Footer>
+                </Modal>
+                <Modal show={exibirModalError} onHide={handleFecharModalError} data-testid="modal">
+                    <Modal.Header closeButton>
+                        <Modal.Title>Error</Modal.Title>
+                    </Modal.Header>
+                    <Modal.Body>
+                        Erro ao atualizar tarefa, tente novamente em instates.
+                    </Modal.Body>
+                    <Modal.Footer>
+                        <Button
+                            variant="warning"
+                            onClick={handleFecharModalError}
+                            >
+                                Fechar
                         </Button>
                     </Modal.Footer>
                 </Modal>

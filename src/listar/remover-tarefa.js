@@ -7,6 +7,7 @@ import { faTrashAlt } from "@fortawesome/free-solid-svg-icons";
 function RemoverTarefa(props) {
 
     const [exibirModal, setExibirModal] = useState(false)
+    const [exibirModalErro, setExibirModalErro] = useState(false)
     
     function handleAbrirModal(event) {
         event.preventDefault();
@@ -25,6 +26,10 @@ function RemoverTarefa(props) {
         localStorage['tarefas'] = JSON.stringify(tarefas);
         setExibirModal(false)
         props.recarregarTarefas(true);
+    }
+
+    function handleFecharModalErro() {
+        setExibirModalErro(false);
     }
 
     return (

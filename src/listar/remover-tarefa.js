@@ -56,6 +56,21 @@ function RemoverTarefa(props) {
                     </Button>
                 </Modal.Footer>
             </Modal>
+            <Modal show={exibirModalErro} onHide={handleFecharModalErro}>
+                < closeButton>
+                    <Modal.Title>
+                        Erro
+                    </Modal.Title>
+                    <Modal.Body>
+                        Erro ao remover a tarefa, tente remover em instantes.
+                    </Modal.Body>
+                    <Modal.Footer>
+                        <Button variant="warning" onClick={handleFecharModalErro}>
+                            Fechar
+                        </Button>
+                    </Modal.Footer>
+                </Modal.Header>
+            </Modal>
         </span>
     );
 }
